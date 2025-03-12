@@ -165,3 +165,46 @@ public String getOperator() {
         return operator;
     }
 ```
+
+
+## Task 2: Tooling
+Experiment with installing/using Cucumber with Scala and/or in VSCode. Is VSCode better at all here? Does Cucumber play 
+well with Scala 3?
+
+### Work Done:
+
+#### **VSCode**:
+
+Starting with VSCode, the IDE can indeed be used to both write and/or execute Gherkin "programs", the main problem
+though lies in the set up, as it is very convoluted to set up the required plugins and steps in order to try and use
+Gherkin with multiple languages (Java, Scala, Typescript, Javascript ecc.); compare this with *IntelliJ*, which requires
+only the installation of **one** plugin for the IDE to recognize the language and execute it properly.
+
+The first step is to open the main directory of the application we want to write and test to using VSCode, then two
+plugins have to be downloaded:
+
+* ***Cucumber (Gherkin) Full Support***, to enable suggestions and help when writing Gherkin resource files;
+* ***Cucumber Quick***, to enable the actual running of the Gherkin files using different platforms.
+
+Both plugins also require (if not already present) the creation of the *.vscode* directory, in the main directory of the
+application, and the creation ofa a .json file called *settings.json* inside of it, to hold all the configs necessary
+for the extensions to run. 
+
+Both are very much customizable, and once the file is set up, the first extension is already ready to use, the problem lies
+in lieu of the second one, which requires the installation, set up and configuration of different tools (only one is
+needed but it still is very bothersome compared to IntelliJ). The currently supported tools, as per stated in the
+extension's main page, are:
+
+* Protractor Cucumber;
+* WebDriverIo Cucumber;
+* Cypress Cucumber Pre-processor;
+* Native CucumberJS;
+* Serenity-JS.
+
+It goes without saying that IntelliJ reveals itself to be quite more easy and straightforward to set up, and I will use
+it from this point onward for the other tasks (I have also used it for the first Calculator task).
+
+
+#### **Scala**:
+
+
