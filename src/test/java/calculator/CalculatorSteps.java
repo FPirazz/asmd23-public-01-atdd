@@ -2,7 +2,7 @@ package calculator;
 
 import io.cucumber.java.en.*;
 
-public class CalculatorSteps {
+class CalculatorSteps {
     private int res = 0;
     private Calculator calculator;
 
