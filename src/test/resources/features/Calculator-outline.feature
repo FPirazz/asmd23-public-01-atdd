@@ -12,3 +12,13 @@ Feature:  Adding numbers with a Calculator
       | 1    | 1    | 2   |
       | 1    | -1   | 0   |
       | -5   | -6   | -11 |
+
+  Scenario Outline: Multiply two numbers
+    Given I have a Calculator
+    When I multiply <arg0> and <arg1>
+    Then the multiplication should be <res>
+    Examples:
+      | arg0 | arg1 | res |
+      | 1    | 1    | 1   |
+      | 1    | -1   | -1  |
+      | -5   | -6   | 30  |

@@ -24,4 +24,21 @@ public class CalculatorSteps {
             throw new IllegalStateException();
         }
     }
+
+    // Adding new operations below
+
+    @When("I multiply {int} and {int}")
+    public void iMultiplyAnd(int arg0, int arg1) {
+        this.calculator.enter(arg0);
+        this.calculator.enter(arg1);
+    }
+
+    @Then("the multiplication should be {int}")
+    public void theMultiplicationShouldBe(int arg0) {
+        this.calculator.multiply();
+        if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
+            throw new IllegalStateException();
+        }
+    }
+
 }
