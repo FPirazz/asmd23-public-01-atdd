@@ -24,7 +24,23 @@ Feature:  Adding numbers with a Calculator
     When I multiply 1 and 5
     Then the multiplication should be 5
 
-  Scenario:  Multiply two negative numbers
+  Scenario:  Multiply a negative number and a positive number
     Given I have a Calculator
     When I multiply -2 and 10
     Then the multiplication should be -20
+
+
+  Scenario:  Divide two positive numbers
+    Given I have a Calculator
+    When I divide 5 and 5
+    Then the divide should be 1
+
+  Scenario:  Divide a negative number and a positive number
+    Given I have a Calculator
+    When I multiply -10 and 2
+    Then the divide should be -5
+
+  Scenario:  Divide a number by zero
+    Given I have a Calculator
+    When I multiply 0 and 5
+    Then the divide should be 0

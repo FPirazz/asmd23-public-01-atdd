@@ -41,4 +41,19 @@ public class CalculatorSteps {
         }
     }
 
+
+    @When("I divide {int} and {int}")
+    public void iDivideAnd(int arg0, int arg1) {
+        this.calculator.enter(arg0);
+        this.calculator.enter(arg1);
+    }
+
+    @Then("the divide should be {int}")
+    public void theDivideShouldBe(int arg0) {
+        this.calculator.divide();
+        if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
+            throw new IllegalStateException();
+        }
+    }
+
 }
