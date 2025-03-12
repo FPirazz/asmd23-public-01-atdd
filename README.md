@@ -17,7 +17,7 @@ shown below.
 
 The new scenarios produced for the division:
 ```
-Scenario:  Divide two positive numbers
+  Scenario:  Divide two positive numbers
     Given I have a Calculator
     When I divide 5 and 5
     Then the quotient should be 1
@@ -54,20 +54,20 @@ Thereafter, I defined the necessary steps:
 
 ```
 @When("I divide {int} and {int}")
-    public void iDivideAnd(int arg0, int arg1) {
-        this.calculator.enter(arg0);
-        this.calculator.enter(arg1);
-    }
+public void iDivideAnd(int arg0, int arg1) {
+    this.calculator.enter(arg0);
+    this.calculator.enter(arg1);
+}
 ```
 
 ```
-    @Then("the quotient should be {int}")
-    public void theQuotientShouldBe(int arg0) {
-        this.calculator.divide();
-        if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
-            throw new IllegalStateException();
-        }
+@Then("the quotient should be {int}")
+public void theQuotientShouldBe(int arg0) {
+    this.calculator.divide();
+    if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
+        throw new IllegalStateException();
     }
+}
 ```
 
 Finally adding the necessary code in the Calculator.java class for the actual division to take place, which also checks
@@ -75,12 +75,12 @@ that the second number given is **not** a zero, otherwise an exception is thrown
 
 ```
 public void divide() {
-        if(numbers.size() != 2 || numbers.get(1) == 0) {
-            throw new IllegalStateException();
-        }
-        numbers.set(0, numbers.get(0) / numbers.get(1));
-        numbers.remove(1);
+    if(numbers.size() != 2 || numbers.get(1) == 0) {
+        throw new IllegalStateException();
     }
+    numbers.set(0, numbers.get(0) / numbers.get(1));
+    numbers.remove(1);
+}
 ```
 
 After that, in order to make the tests more interesting, I thought of adding a logic system to automatically calculate the
@@ -157,13 +157,13 @@ private String operator;
 ```
 public void use(String op) {
         operator = op;
-    }
+}
 ```
 
 ```
 public String getOperator() {
         return operator;
-    }
+}
 ```
 
 
@@ -207,4 +207,116 @@ it from this point onward for the other tasks (I have also used it for the first
 
 #### **Scala**:
 
+When it comes to Scala, as previously stated, it was surprisingly easy to develop Cucumber tests, considering the 
+straightforwardness of IntelliJ. The first thing to do was to download the appropriate plugin, called 
+***Cucumber for Scala***, and I also added this line to the SBT build file to download the necessary libraries data with
+the following code:
 
+```
+ThisBuild / version := "0.1.0-SNAPSHOT"
+lazy val root = (project in file("."))
+  .settings(
+    name := "java-sbt-example",
+    libraryDependencies ++= Seq(
+        "net.aichler" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test,
+        "io.cucumber" % "cucumber-java" % "6.1.1" % Test,
+  --->  "io.cucumber" %% "cucumber-scala" % "6.10.4" % Test,
+    )
+)
+```
+
+As with Java, I implemented both a Scala version of the Calculator implementation, and the Steps implementation. The 
+Calculator class is shown as follows:
+
+```
+package calculator
+
+import scala.collection.mutable.ListBuffer
+
+trait CalculatorScala {
+  def use(op: String): Unit
+  def getOperator: String
+  def enter(i: Int): Unit
+  def add(): Unit
+  def getResult: Int
+  def multiply(): Unit
+  def divide(): Unit
+}
+object CalculatorScala {
+  private class CalculatorScalaImpl extends CalculatorScala {
+    private var operator: String = _
+    private val numbers: ListBuffer[Int] = ListBuffer()
+
+    override def use(op: String): Unit = {
+      operator = op
+    }
+
+    override def getOperator: String = operator
+
+    override def enter(i: Int): Unit = {
+      numbers += i
+      if (numbers.size > 2)
+        throw new IllegalStateException()
+    }
+
+    override def add(): Unit = {
+      if (numbers.size != 2)
+        throw new IllegalStateException()
+      numbers(0) += numbers(1)
+      numbers.remove(1)
+    }
+
+    override def getResult: Int = {
+      if (numbers.size != 1)
+        throw new IllegalStateException()
+      val result = numbers.head
+      numbers.remove(0)
+      result
+    }
+
+    // Adding new operations below
+    // Multiplication
+
+    override def multiply(): Unit = {
+      if (numbers.size != 2)
+        throw new IllegalStateException()
+      numbers(0) *= numbers(1)
+      numbers.remove(1)
+    }
+
+    // Division
+    override def divide(): Unit = {
+      if (numbers.size != 2 || numbers(1) == 0)
+        throw new IllegalStateException()
+      numbers(0) /= numbers(1)
+      numbers.remove(1)
+    }
+  }
+  def apply(): CalculatorScala = new CalculatorScalaImpl
+}
+```
+
+And here below is a code example of the Steps version of the Scala implementation:
+
+```
+Given("I have a Scala Calculator") { () =>
+    this.calculator = CalculatorScala.apply()
+}
+  
+...
+  
+Then("the result from the operation should be {int} in scala") { (arg0: Int) =>
+    this.calculator.getOperator match {
+      case "+" | "-" => this.calculator.add()
+      case "*" => this.calculator.multiply()
+      case "/" => this.calculator.divide()
+      case _ => throw new IllegalStateException()
+    }
+    if (arg0 != this.calculator.getResult)
+      throw new IllegalStateException()
+} 
+```
+
+Following the implementation of the code in the project, IntelliJ is able to run Cucumber tests using Scala without any
+problems, showing that is capable of supporting not only Java, but as a matter of fact other languages and subsets of 
+languages (For example Typescript).
