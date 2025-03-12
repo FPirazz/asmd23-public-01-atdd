@@ -32,3 +32,15 @@ Feature:  Adding numbers with a Calculator
       | 5    | 5    | 1   |
       | 10   | -2   | -5  |
       | 0    | 20   | 0   |
+
+
+  Scenario Outline: Trying different operators
+    Given I have a Calculator
+    When I have <operator>, with the numbers <arg0> and <arg1>
+    Then the result from the operation should be <res>
+    Examples:
+      | operator | arg0 |  | arg1 | res |
+      | "+"      | 10   |  | 5    | 15  |
+      | "-"      | 10   |  | -5   | 5   |
+      | "*"      | 10   |  | 10   | 100 |
+      | "/"      | 20   |  | 2    | 10  |

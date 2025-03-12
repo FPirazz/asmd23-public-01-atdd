@@ -44,3 +44,15 @@ Feature:  Adding numbers with a Calculator
     Given I have a Calculator
     When I multiply 0 and 5
     Then the divide should be 0
+
+
+  Scenario:  Trying different operators
+    Given I have a Calculator
+    When I have "*", with the numbers 0 and 5
+    Then the result from the operation should be 0
+    When I have "+", with the numbers 10 and 5
+    Then the result from the operation should be 15
+    When I have "-", with the numbers 10 and -5
+    Then the result from the operation should be 5
+    When I have "/", with the numbers 20 and 2
+    Then the result from the operation should be 10

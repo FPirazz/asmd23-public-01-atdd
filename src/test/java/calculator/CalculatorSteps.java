@@ -26,6 +26,7 @@ public class CalculatorSteps {
     }
 
     // Adding new operations below
+    // Multiplication
 
     @When("I multiply {int} and {int}")
     public void iMultiplyAnd(int arg0, int arg1) {
@@ -41,6 +42,7 @@ public class CalculatorSteps {
         }
     }
 
+    // Division
 
     @When("I divide {int} and {int}")
     public void iDivideAnd(int arg0, int arg1) {
@@ -51,6 +53,29 @@ public class CalculatorSteps {
     @Then("the divide should be {int}")
     public void theDivideShouldBe(int arg0) {
         this.calculator.divide();
+        if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
+            throw new IllegalStateException();
+        }
+    }
+
+    // Multiple operations setup
+
+    @When("I have {string}, with the numbers {int} and {int}")
+    public void iDivideAnd(String arg0, int arg1, int arg2) {
+        this.calculator.use(arg0);
+        this.calculator.enter(arg1);
+        this.calculator.enter(arg2);
+    }
+
+    @Then("the result from the operation should be {int}")
+    public void theResultFromOperationShouldBe(int arg0) {
+        if(this.calculator.getOperator().equals("+") || this.calculator.getOperator().equals("-")) {
+            this.calculator.add();
+        } else if(this.calculator.getOperator().equals("*")) {
+            this.calculator.multiply();
+        } else if(this.calculator.getOperator().equals("/")) {
+            this.calculator.divide();
+        }
         if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
             throw new IllegalStateException();
         }
