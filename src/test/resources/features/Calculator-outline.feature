@@ -26,7 +26,7 @@ Feature:  Adding numbers with a Calculator
   Scenario Outline: Divide two numbers
     Given I have a Calculator
     When I divide <arg0> and <arg1>
-    Then the divide should be <res>
+    Then the quotient should be <res>
     Examples:
       | arg0 | arg1 | res |
       | 5    | 5    | 1   |

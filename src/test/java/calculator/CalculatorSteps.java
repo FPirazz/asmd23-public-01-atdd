@@ -50,8 +50,8 @@ public class CalculatorSteps {
         this.calculator.enter(arg1);
     }
 
-    @Then("the divide should be {int}")
-    public void theDivideShouldBe(int arg0) {
+    @Then("the quotient should be {int}")
+    public void theQuotientShouldBe(int arg0) {
         this.calculator.divide();
         if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
             throw new IllegalStateException();
@@ -75,6 +75,8 @@ public class CalculatorSteps {
             this.calculator.multiply();
         } else if(this.calculator.getOperator().equals("/")) {
             this.calculator.divide();
+        } else {
+            throw new IllegalStateException();
         }
         if (arg0 != this.calculator.getResult()) { // or using Junit's asserts
             throw new IllegalStateException();

@@ -33,17 +33,17 @@ Feature:  Adding numbers with a Calculator
   Scenario:  Divide two positive numbers
     Given I have a Calculator
     When I divide 5 and 5
-    Then the divide should be 1
+    Then the quotient should be 1
 
   Scenario:  Divide a negative number and a positive number
     Given I have a Calculator
     When I multiply -10 and 2
-    Then the divide should be -5
+    Then the quotient should be -5
 
   Scenario:  Divide a number by zero
     Given I have a Calculator
     When I multiply 0 and 5
-    Then the divide should be 0
+    Then the quotient should be 0
 
 
   Scenario:  Trying different operators
