@@ -320,3 +320,107 @@ Then("the result from the operation should be {int} in scala") { (arg0: Int) =>
 Following the implementation of the code in the project, IntelliJ is able to run Cucumber tests using Scala without any
 problems, showing that is capable of supporting not only Java, but as a matter of fact other languages and subsets of 
 languages (For example Typescript).
+
+## Task 5: ATDD-LLM
+
+LLMs/ChatGPT can arguably help in write/improve/complete/implement/reverse-engineer a Gherkin specification. 
+Experiment with this, based on the above tasks or in other cases. Is ChatGPT useful for all that?
+
+### Word Done:
+
+As the task asks, I tried different things operations to perform to either write, improve, complete, implement or
+reverse-engineer Gherkin specifications, and as a baseline I used the specs I developed for the first task, using the
+ChatGPT model available on OpenAI as of 13/03/2025, which let you also use separate options for do more reasoning before
+responding, and also search answers on the web;  for every operation I also tried to use to the best of my abilities 
+prompt engineering, in order to get better results, for each operation I will include the prompt and any changes to 
+it to a certain extent when needed, and finally I will create a different chat for each operation to ensure the model
+isn't using data previously produced. The operations went as follows:
+
+* Write: For this operation I asked with the following prompt:
+```
+Could you pretty pretty please help me write a Cucumber script in Gherkin for a java application. The application is 
+just a basic idea of a Calculator, and I want the main operations to be covered (sum, difference, multiplication and 
+division), and also a case where the operation is inputted alongside the numbers.
+```
+As much as silly as the pleading looks, I've found it helps with the results being overly polite to LLM models generally
+speaking, reading online that it might stem as a bias in the training data of LLMs generally speaking, were usually, as 
+it is in real life, "better responses" are given if the question was asked politely rather than rudely.
+
+GPT actually produced a decent Gherkin script, that looks like the one present in the Gherkin file called 
+CalculatorGPT.feature.
+
+Very much similar to mine, I've also asked to produce a Java file for the steps definition, in a similar manner as the
+first one, that ended up producing the code for the steps definition ***and*** the business logic, defined respectively
+in the CalculatorStepsGPT.java and CalculatorGPT.java files. I did not paste the content here to not make the README 
+heavier.
+
+And after turning this code into proper Java and feature files, it actually worked well! (Aside from some very minor
+cleanup). Therefore, the writing operation went really well.
+
+* Improve/Complete: The prompt given in this case was:
+```
+Could you pretty pretty please help me imrpove a Cucumber script in Gherkin for a java application. The application is 
+just a basic idea of a Calculator, and it's written like this:
+"
+...
+"
+```
+Where the "dots" (...) part included the whole of the Calculator.feature file, and in turn it produced what is contained
+inside the CalculatorGPTimproved.feature. The result was actually, again, quite good! It produced multiple Scenario 
+Outlines without ever presenting in the prompt, and also simplification like the Background. For the "Complete" operation
+I provided GPT, in another chat, with a half finished (not working) version of the Calculator.feature script, which in
+turn produced a result basically very similar to the previous one (Mainly the components, obviously the words and
+phrases provided by the LLM were different).
+
+* Reverse-Engineer: Finally for the reverse-engineering, I fed GPT this prompt:
+```
+Could you pretty pretty please help me reverse engineer a Cucumber script in Gherkin from the java business logic and 
+steps? The business logic is as follows:
+"
+...
+"
+And the steps are as follows:
+"
+...
+"
+```
+Where in the first few dots I included the Calculator.java file, in the second ones the CalculatorSteps.java one. It once
+again produced a Gherkin file, that looks like this:
+```
+Feature: Basic Calculator Operations
+
+  Scenario: Adding two numbers
+    Given I have a Calculator
+    When I add 5 and 3
+    Then the sum should be 8
+
+  Scenario: Multiplying two numbers
+    Given I have a Calculator
+    When I multiply 4 and 2
+    Then the multiplication should be 8
+
+  Scenario: Dividing two numbers
+    Given I have a Calculator
+    When I divide 10 and 2
+    Then the quotient should be 5
+
+  Scenario: Performing a specified operation
+    Given I have a Calculator
+    When I have "+", with the numbers 6 and 4
+    Then the result from the operation should be 10
+
+  Scenario: Performing multiplication using the operation keyword
+    Given I have a Calculator
+    When I have "*", with the numbers 7 and 3
+    Then the result from the operation should be 21
+
+  Scenario: Performing division using the operation keyword
+    Given I have a Calculator
+    When I have "/", with the numbers 20 and 4
+    Then the result from the operation should be 5
+```
+Which is again very well done and usable, even though obviously it's not as identical as the one I made.
+
+**Conclusion**
+GPT revealed itself to be quite useful actually in producing Gherkin specification, whether this be the work of updating
+the knowledge of GPT or in some other way I don't know but it definitely can be used for the job in question. 
