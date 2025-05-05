@@ -1,4 +1,5 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
+Compile / compileOrder := CompileOrder.JavaThenScala
 lazy val root = (project in file("."))
   .settings(
     name := "java-sbt-example",
