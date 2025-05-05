@@ -321,6 +321,44 @@ Following the implementation of the code in the project, IntelliJ is able to run
 problems, showing that is capable of supporting not only Java, but as a matter of fact other languages and subsets of 
 languages (For example Typescript).
 
+
+## Task 3: REENGINEER
+Take an existing implemented small app with GUI, e.g. an OOP exam. Write Gherkin specifications explaining what the 
+system is expected to do, and make acceptance tests pass. Does the system need a refactor of implementation? What does 
+it tell us about how an application has to be designed to be easily acceptance tested?
+
+Search here: https://bitbucket.org/mviroli/oop2023-esami (2023, 2022,. . . )
+
+### Work Done:
+
+I choose one of the projects that have been provided in the previous link from previous OOP exams, and I went with the 
+UI application for the `a01a` exam, more precisely the `sol2` exercise.
+
+I based the requirements based on what was asked in the [Test.java](src/main/java/a01a/sol2/Test.java) file of the project,
+where the main tasks were jotted down, and I translated them in Acceptance Tests through Gherkin/Cucumber inside the file
+[OOPSol2.feature](src/test/resources/features/OOPSol2.feature), where the main features I listed down where of:
+
+* Clicking a cell and making sure a number gets inserted into the clicked cell;
+* The cells move when one that has a number (or one adjacent to it) gets clicked, and the original cell doesn't have a 
+number anymore;
+* Again, cells that are already moving, will still move when a random cell gets clicked;
+* And finally when a cell goes out of the grid the application closes.
+
+The steps were defined all inside the file [OOPSol2Steps.java](src/test/java/a01a/sol2/OOPSol2Steps.java), considering
+though that I had to slightly modify the `sol2` package classes, since, in order to check that the used methods
+implementations were actually executed properly, I had to move the instantiation of the Logic from inside the GUI to
+outside, so I could initialize both of them separately, and check whether the logic has been properly executed through
+the implemented steps.
+
+So all in all, Gherkin can be definitely used to write specifications for applications with GUI, or at least ones that 
+follow traditional UI development like MVC. What comes obvious though, is the fact that the business logic (and any 
+other) elements that need to be privatized in general, need an external outlet in order for Gherkin to interact with it
+and executing the Scenarios, therefore making the elements not really as private as one would think/want, even though
+this can be limited by using traditional methods like getters/setters etc. There's definitely other ways to go about this,
+like maybe implementing protected packages inside the implementation, once again showing that it's a problem which requires
+analysis on a case-by-case solution.
+
+
 ## Task 5: ATDD-LLM
 
 LLMs/ChatGPT can arguably help in write/improve/complete/implement/reverse-engineer a Gherkin specification. 
